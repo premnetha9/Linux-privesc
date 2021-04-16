@@ -7,14 +7,15 @@ All the information provided is completely taken from the TryHackMe platform fro
 
 # Tools
 
-1. dirtycow
-2. exim
-3. linenum
-4. linpeas
-5. linux-exploit-suggester
-6. nfsshell
-7. nginx
-8. source_files
+To download the tools click below, this tools are used for enumeration and exploiting.  
+
+1. [dirtycow](https://github.com/dirtycow/dirtycow.github.io)
+2. [exim](https://gist.github.com/suryadana/ecab495f9e431b8179f67ddcd32a265a)
+3. [linenum](https://github.com/rebootuser/LinEnum)
+4. [linpeas](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS)
+5. [linux-exploit-suggester](https://github.com/mzet-/linux-exploit-suggester)
+6. [nfsshell](https://github.com/NetDirect/nfsshell)
+7. [nginx](https://github.com/xl7dev/Exploit/tree/master/Nginx)
 
 # 1. Privilage Escalation- Kernel Exploit
 ## Detection
