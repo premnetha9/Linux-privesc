@@ -1,3 +1,12 @@
+# Information
+
+Privilege escalation happens when a malicious user exploits a bug, design flaw, or configuration error in an application or operating system to gain elevated access to resources that should normally be unavailable to that user. The attacker can then use the newly gained privileges to steal confidential data, run administrative commands or deploy malware – and potentially do serious damage to your operating system, server applications, organization, and reputation.  
+Once we have a limited shell it is useful to escalate that shells privileges. This way it will be easier to hide, read and write any files, and persist between reboots.   
+
+All the information provided is completely taken from the TryHackMe platform from the room Linux PrivEsc Arena by TCM, check out the room [Here](https://tryhackme.com/room/linuxprivescarena).  
+
+@Copyrights  
+TCM - The Cyber Mentor
 
 # Tools
 
